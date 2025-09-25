@@ -12,7 +12,7 @@ class Consultant(BaseModel):
 
 consultants_db = [
     Consultant(id=1, name="Anna K.", skills=["python", "docker", "fastapi"], load_percent=40),
-    Consultant(id=2, name="Leo T.", skills=["javascript", "react", "css"], load_percent=20),
+    Consultant(id=2, name="Leo T.", skills=["python", "react", "css"], load_percent=20),
     Consultant(id=3, name="Sofia M.", skills=["python", "aws", "terraform"], load_percent=90),
     Consultant(id=4, name="David B.", skills=["docker", "kubernetes", "aws"], load_percent=100),
 ]
