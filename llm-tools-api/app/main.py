@@ -20,6 +20,7 @@ async def get_consultant_summary(my_availability_percent: int, required_skill: s
     """
     Fetches consultant data, filters it, and returns an LLM-generated summary.
     """
+    
     try:
         async with httpx.AsyncClient() as http_client:
             response = await http_client.get(CONSULTANT_API_URL)
@@ -37,14 +38,13 @@ async def get_consultant_summary(my_availability_percent: int, required_skill: s
         return {"summary": f"No consultants found with at least {my_availability_percent}% availability and the skill '{required_skill}'."}
 
     prompt = f"""
-    Based on the following data about available consultants, please generate a brief, human-readable summary.
+    Based on the following data about {len(available_consultants)} available consultants, please generate a brief, human-readable summary.
     The user is looking for consultants with at least {my_availability_percent}% availability and the skill '{required_skill}'.
 
     Data:
     {available_consultants}
 
-    The summary should state the number of consultants found and then list each one with their name, their availability, and confirm they have the required skill.
-    For example: "Found 1 consultant for the skill 'python'. Anna K. has 60% availability."
+    The summary must start by stating the correct number of consultants found, which is {len(available_consultants)}. Then, list each one with their name and their availability.
     Be concise and professional.
     """
 
