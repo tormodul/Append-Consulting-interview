@@ -27,7 +27,7 @@ async def get_consultant_summary(my_availability_percent: int, required_skill: s
             all_consultants = response.json()
     except httpx.RequestError as e:
         raise HTTPException(status_code=503, detail=f"Could not connect to Consultant API: {e}")
-
+    
     available_consultants = [
         c for c in all_consultants
         if (100 - c["load_percent"]) >= my_availability_percent and required_skill.lower() in c["skills"]
@@ -43,13 +43,14 @@ async def get_consultant_summary(my_availability_percent: int, required_skill: s
     Data:
     {available_consultants}
 
-    The summary should state the number of consultants found and then list each one with their name and their exact percentage of availability (100 - load).
-    For example: 'Found 2 consultants. Anna K. has 60% availability. Leo T. has 80% availability.'
+    The summary should state the number of consultants found and then list each one with their name, their availability, and confirm they have the required skill.
+    For example: "Found 1 consultant for the skill 'python'. Anna K. has 60% availability."
+    Be concise and professional.
     """
 
     try:
         completion = client.chat.completions.create(
-            model="mistralai/mistral-7b-instruct:free", # Change this one later
+            model="openai/gpt-4o-mini", 
             messages=[
                 {"role": "system", "content": "You are a helpful assistant that summarizes data concisely."},
                 {"role": "user", "content": prompt},

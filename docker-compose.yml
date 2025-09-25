@@ -1,0 +1,12 @@
+services:
+  consultant-api:
+    build: ./consultant-api
+    ports:
+      - "8000:8000"
+
+  llm-tools-api:
+    build: ./llm-tools-api
+    ports:
+      - "8001:8000"
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
